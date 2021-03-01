@@ -45,46 +45,49 @@ $menu = [
     ]
 ];
 
-//showing menu with foreach loop
 
-function menuNavFor($menu) {
-    echo '<ul class="navMenu">';
+//showing menu with foreach loop
+$html2 = '';
+function menuNavFor($menu, $html2) {
+    $html2 .= '<ul class="navMenu">';
     for ($i = 0; $i < count($menu); $i++) {
         if(array_key_exists('children', $menu[$i])){
-            echo '<li class="navMenu__item"><a href="'. $menu[$i]['link'] .'">' . $menu[$i]['title']. '</a>';
-            echo '<ul class="submenu">';
+            $html2 .= '<li class="navMenu__item"><a href="'. $menu[$i]['link'] .'">' . $menu[$i]['title']. '</a>';
+            $html2 .= '<ul class="submenu">';
             for ($j = 0; $j < count($menu[$i]['children']); $j++) {
-                echo  '<li><a href="' . $menu[$i]['children'][$j]['link'] .'">  ' . $menu[$i]['children'][$j]['title'] . '</a></li>';
+                $html2 .=  '<li><a href="' . $menu[$i]['children'][$j]['link'] .'">  ' . $menu[$i]['children'][$j]['title'] . '</a></li>';
             }
-            echo '</ul>';
-            echo '</li>';
+            $html2 .= '</ul>';
+            $html2 .= '</li>';
         } else{
-            echo '<li class="navMenu__item"><a href="'. $menu[$i]['link'] .'">' . $menu[$i]['title'] . '</a></li>';
+            $html2 .= '<li class="navMenu__item"><a href="'. $menu[$i]['link'] .'">' . $menu[$i]['title'] . '</a></li>';
         }
     }
-    echo '</ul>';
+    $html2 .= '</ul>';
+    return $html2;
 }
 
-$foreach = '<ul class="navMenu">';
- function menuNavForeach()
+$html = '';
+ function menuNavForeach($html)
  {
      global $menu;
-    echo '<ul class="navMenu">';
+    $html .= '<ul class="navMenu">';
     foreach ($menu as $item)
     {
         if(array_key_exists('children', $item)){
-            echo '<li  class="navMenu__item"><a href="' . $item['link'] . '">' . $item['title'] . '</a><ul  class="submenu">';
+            $html .= '<li  class="navMenu__item"><a href="' . $item['link'] . '">' . $item['title'] . '</a><ul  class="submenu">';
                 foreach ($item['children'] as $inner_item)
                 {
-                    echo '<li><a href="' . $inner_item['link'] .'">' . $inner_item['title'] . '</a></li>';
+                    $html .= '<li><a href="' . $inner_item['link'] .'">' . $inner_item['title'] . '</a></li>';
                 }
 
-            echo '</ul></li>';
+            $html .= '</ul></li>';
         }else {
-            echo '<li  class="navMenu__item"><a href="' . $item['link'] . '">' . $item['title'] . '</a></li>';
+            $html .= '<li  class="navMenu__item"><a href="' . $item['link'] . '">' . $item['title'] . '</a></li>';
         }
     }
-     echo '</ul>';
+     $html .= '</ul>';
+    return $html;
  }
 
 ?>
@@ -108,11 +111,11 @@ $foreach = '<ul class="navMenu">';
   <header class="header">
     <div class="container">
       <nav>
-        <?= menuNavFor($menu);  ?>
+        <?= menuNavFor($menu, $html2);  ?>
       </nav>
       <br><br>
       <div class="foreach">
-        <?= menuNavForeach(); ?>
+        <?= menuNavForeach($html); ?>
       </div>
     </div>
   </header>
